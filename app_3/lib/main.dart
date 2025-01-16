@@ -44,22 +44,12 @@ class _HomePageState extends State<HomePage> {
 
   void calculateAge() {
     DateTime currdate = DateTime.now();
-    List<int> months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    if (birthdate.day > currdate.day) {
-      currdate.copyWith(day: currdate.day + months[birthdate.month - 1]);
-      currdate.copyWith(month: currdate.month - 1);
-    }
-    if (birthdate.month > currdate.month) {
-      currdate.copyWith(year: currdate.year - 1);
-      currdate.copyWith(month: currdate.month + 12);
-    }
-
-    DateTime age = DateTime(currdate.year - birthdate.year,
-        currdate.month - birthdate.month, currdate.day - birthdate.day);
-
+    var ageInDays = currdate.difference(birthdate).inDays;
+    var year = ageInDays ~/ 365;
+    var months = (ageInDays % 365) ~/ 30;
+    var days = (ageInDays % 365) % 30;
     setState(() {
-      displayAge =
-          "You are \n ${age.year} Years ${age.month} Months ${age.day} Days old!";
+      displayAge = "You are $year Years $months Months $days Days old!";
     });
   }
 
